@@ -139,12 +139,7 @@ function onPlayerStateChange(event) {
     } else if (event.data == 0) {
         videoId.textContent = "ENDED";
         if (Object.keys(vids[channelNumber]).length == playingNowOrder) {
-            if (sync(channelNumber)) {
-                // If there's a video scheduled to play now, start playing it
-                player.loadVideoById(playingNow, startAt);
-            } else {
-                getList();
-            }
+            getList();
         } else {
             playChannel(channelNumber, false);
         }

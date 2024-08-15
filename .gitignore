@@ -1,2 +1,3 @@
 # Ignore Python files
 *.py
+*.DS_Store

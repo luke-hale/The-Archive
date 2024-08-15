@@ -74,6 +74,15 @@ function sync(ch) {
             return true;
         }
     }
+
+    // If the current time exceeds the last video's play time, loop back to the first video
+    if (t > lastVideoEndTime) {
+        playingNowOrder = 0;  // Reset to the first video
+        playingNow = vids[ch][0].id;  // Play the first video
+        startAt = t - vids[ch][0].playAt;  // Calculate the start time based on the first video's playAt time
+        return true;
+    }
+    
     return false;
 }
 

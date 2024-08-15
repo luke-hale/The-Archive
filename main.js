@@ -80,25 +80,25 @@ function sync(ch) {
         }
     }
 
-    // If the current time exceeds the last video's play time, loop back to the first video
-    if (t >= lastVideoEndTime) {
-        // Calculate the playlist length
-        let playListLength = lastVideoEndTime - firstVideoStartTime;
-
-        // Wrap t around within the playlist length
-        t = (t % playListLength) + firstVideoStartTime;
-
-        // Now, t is adjusted to be within the playlist's start time frame
-        // Find the next video to play based on the adjusted t
-        for (let i in vids[ch]) {
-            if (t >= vids[ch][i].playAt && t < vids[ch][i].playAt + vids[ch][i].duration) {
-                playingNowOrder = i;
-                playingNow = vids[ch][i].id;
-                startAt = t - vids[ch][i].playAt; // Calculate start time correctly
-                return true;
-            }
-        }
-    }
+//    // If the current time exceeds the last video's play time, loop back to the first video
+//    if (t >= lastVideoEndTime) {
+//        // Calculate the playlist length
+//        let playListLength = lastVideoEndTime - firstVideoStartTime;
+//
+//        // Wrap t around within the playlist length
+//        t = (t % playListLength) + firstVideoStartTime;
+//
+//        // Now, t is adjusted to be within the playlist's start time frame
+//        // Find the next video to play based on the adjusted t
+//        for (let i in vids[ch]) {
+//            if (t >= vids[ch][i].playAt && t < vids[ch][i].playAt + vids[ch][i].duration) {
+//                playingNowOrder = i;
+//                playingNow = vids[ch][i].id;
+//                startAt = t - vids[ch][i].playAt; // Calculate start time correctly
+//                return true;
+//            }
+//        }
+//    }
 
     return false;
 }

@@ -53,6 +53,9 @@ function playChannel(ch, s) {
     control.style.display = "flex";
     smpte.style.opacity = 0;
     if (sync(ch)) {
+        if player.isMuted() {
+            toggleMute()
+        }
         player.loadVideoById(playingNow, startAt);
         player.setVolume(100);
         player.setPlaybackRate(1);
@@ -135,6 +138,9 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
     staticNoise.style.opacity = 0.75;
     if (event.data == -1) {
+        if !player.isMuted() {
+            toggleMute()
+        }
         videoId.textContent = "Ad playing...";
     } else if (event.data == 0) {
         videoId.textContent = "ENDED";
@@ -142,6 +148,7 @@ function onPlayerStateChange(event) {
             getList();
         } else {
             playChannel(channelNumber, false);
+            player.isMuted()
         }
     } else if (event.data == 1) {
         let _startAt = startAt;

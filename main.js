@@ -135,7 +135,7 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
     staticNoise.style.opacity = 0.75;
     if (event.data == -1) {
-        videoId.textContent = "UNSTARTED - Ad playing...";
+        videoId.textContent = "Ad playing...";
     } else if (event.data == 0) {
         videoId.textContent = "ENDED";
         if (Object.keys(vids[channelNumber]).length == playingNowOrder) {

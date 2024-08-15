@@ -82,7 +82,7 @@ function sync(ch) {
         startAt = t - vids[ch][0].playAt;  // Calculate the start time based on the first video's playAt time
         return true;
     }
-    
+
     return false;
 }
 
@@ -91,32 +91,32 @@ if (!YT.loading) {
     YT.loading = 1; (function () {
         var l = []; YT.ready = function (f) { if (YT.loaded) f(); else l.push(f) }; window.onYTReady = function () { YT.loaded = 1; var i = 0; for (; i < l.length; i++)try { l[i]() } catch (e) { } }; YT.setConfig = function (c) { var k; for (k in c) if (c.hasOwnProperty(k)) YTConfig[k] = c[k] }; var a = document.createElement("script"); a.type = "text/javascript"; a.id = "www-widgetapi-script"; a.src = scriptUrl; a.async = true; var c = document.currentScript; if (c) {
             var n = c.nonce || c.getAttribute("nonce"); if (n) a.setAttribute("nonce",
-                n)
-        } var b = document.getElementsByTagName("script")[0]; b.parentNode.insertBefore(a, b)
+                                                                              n)
+                } var b = document.getElementsByTagName("script")[0]; b.parentNode.insertBefore(a, b)
     })()
 };
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: 400,
-        width: 700,
-        playerVars: {
-            'playsinline': 1,
-            'disablekb': 1,
-            'enablejsapi': 1,
-            'iv_load_policy': 3,
-            'cc_load_policy': 0,
-            'controls': 0,
-            'rel': 0,
-            'autoplay': 1,
-            'mute': 1
-        },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange,
-            'onAutoplayBlocked': onAutoplayBlocked,
-            'onError': onErrorOccured
-        }
+    height: 400,
+    width: 700,
+    playerVars: {
+        'playsinline': 1,
+        'disablekb': 1,
+        'enablejsapi': 1,
+        'iv_load_policy': 3,
+        'cc_load_policy': 0,
+        'controls': 0,
+        'rel': 0,
+        'autoplay': 1,
+        'mute': 1
+    },
+    events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange,
+        'onAutoplayBlocked': onAutoplayBlocked,
+        'onError': onErrorOccured
+    }
     });
     resizePlayer();
     window.addEventListener('resize', function (event) {
@@ -139,7 +139,12 @@ function onPlayerStateChange(event) {
     } else if (event.data == 0) {
         videoId.textContent = "ENDED";
         if (Object.keys(vids[channelNumber]).length == playingNowOrder) {
-            getList();
+            if (sync(channelNumber)) {
+                // If there's a video scheduled to play now, start playing it
+                player.loadVideoById(playingNow, startAt);
+            } else {
+                getList();
+            }
         } else {
             playChannel(channelNumber, false);
         }

@@ -53,9 +53,6 @@ function playChannel(ch, s) {
     control.style.display = "flex";
     smpte.style.opacity = 0;
     if (sync(ch)) {
-        if player.isMuted() {
-            toggleMute()
-        }
         player.loadVideoById(playingNow, startAt);
         player.setVolume(100);
         player.setPlaybackRate(1);
@@ -151,6 +148,9 @@ function onPlayerStateChange(event) {
             player.isMuted()
         }
     } else if (event.data == 1) {
+        if player.isMuted() {
+            toggleMute()
+        }
         let _startAt = startAt;
         let _playingNow = playingNow;
         let _playingNowOrder = playingNowOrder;

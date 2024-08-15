@@ -67,7 +67,7 @@ function sync(ch) {
     playingNow = 0;
     let t = Math.floor(Date.now() / 1000);
     let lastVideoEndTime = 0;
-    let firstVideoStartTime = vids[ch][0].playAt;
+//    let firstVideoStartTime = vids[ch][0].playAt;
 
     for (let i in vids[ch]) {
         lastVideoEndTime = Math.max(lastVideoEndTime, vids[ch][i].playAt + vids[ch][i].duration);

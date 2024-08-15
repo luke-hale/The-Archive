@@ -1,2 +1,4 @@
 # Ignore Python files
 *.py
+*.py
+getSeconds.py

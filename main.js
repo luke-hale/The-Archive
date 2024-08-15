@@ -135,7 +135,7 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
     staticNoise.style.opacity = 0.75;
     if (event.data == -1) {
-        if !player.isMuted() {
+        if (!player.isMuted()) {
             toggleMute()
         }
         videoId.textContent = "Ad playing...";
@@ -148,7 +148,7 @@ function onPlayerStateChange(event) {
             player.isMuted()
         }
     } else if (event.data == 1) {
-        if player.isMuted() {
+        if (player.isMuted()) {
             toggleMute()
         }
         let _startAt = startAt;

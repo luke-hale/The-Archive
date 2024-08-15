@@ -66,7 +66,12 @@ function playChannel(ch, s) {
 function sync(ch) {
     playingNow = 0;
     let t = Math.floor(Date.now() / 1000);
+    let lastVideoEndTime = 0;
+    let firstVideoStartTime = vids[ch][0].playAt;
+
     for (let i in vids[ch]) {
+        lastVideoEndTime = Math.max(lastVideoEndTime, vids[ch][i].playAt + vids[ch][i].duration);
+
         if (t >= vids[ch][i].playAt && t < vids[ch][i].playAt + vids[ch][i].duration) {
             playingNowOrder = i;
             playingNow = vids[ch][i].id;
@@ -76,11 +81,23 @@ function sync(ch) {
     }
 
     // If the current time exceeds the last video's play time, loop back to the first video
-    if (t > lastVideoEndTime) {
-        playingNowOrder = 0;  // Reset to the first video
-        playingNow = vids[ch][0].id;  // Play the first video
-        startAt = t - vids[ch][0].playAt;  // Calculate the start time based on the first video's playAt time
-        return true;
+    if (t >= lastVideoEndTime) {
+        // Calculate the playlist length
+        let playListLength = lastVideoEndTime - firstVideoStartTime;
+
+        // Wrap t around within the playlist length
+        t = (t % playListLength) + firstVideoStartTime;
+
+        // Now, t is adjusted to be within the playlist's start time frame
+        // Find the next video to play based on the adjusted t
+        for (let i in vids[ch]) {
+            if (t >= vids[ch][i].playAt && t < vids[ch][i].playAt + vids[ch][i].duration) {
+                playingNowOrder = i;
+                playingNow = vids[ch][i].id;
+                startAt = t - vids[ch][i].playAt; // Calculate start time correctly
+                return true;
+            }
+        }
     }
 
     return false;
